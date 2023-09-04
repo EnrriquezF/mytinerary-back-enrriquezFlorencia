@@ -17,18 +17,29 @@ const getCities = async (req, res) => {
     let fields = Object.keys(req.query)
     let query = {}
     for (const field of fields) {
-        query[field] ={ $regex : req.query[field], $options:'i'}
+        query[field] ={ $regex : "^"+req.query[field], $options:'i'}
     }
-
-        try{
-            let cities = await City.find(query)
+    try{
+        let cities = await City.find(query).populate('itineraries')
             
+        res.json(cities)
+    }
+    catch(err) {
+        res.json({message: err.message})
+    }
+}
 
-            res.json(
-                cities
-                )} catch(err) {
-                    res.json({message: err.message})
-                }
+const getCityByName = async (req, res) => {
+    let {name} = req.query
+    try{
+        let cities = await City.find({name: new RegExp('^' +name, 'i')})
+            
+        res.json(cities)
+    }
+    catch(err) {
+        res.json({message: err.message})
+    }
+     
 }
 
 const addCity = async (req, res) =>{
@@ -84,5 +95,6 @@ module.exports = {
     getCities,
     addCity,
     modifyCity,
-    deleteCity
+    deleteCity,
+    getCityByName
 }

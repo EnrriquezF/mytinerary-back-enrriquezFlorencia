@@ -10,6 +10,19 @@ const verifyDataCity = (req, res, next) =>{
     next()
 };
 
+const verifyDataItinerary = (req, res, next) =>{
+    let {name, price, duration } = req.body;
+
+    if(!name || !price || !duration ) {
+        return res.status(400).json({message: "invalid data"})
+    }
+    if( name == "" ){
+        return res.status(400).json({message: "invalid data"})
+    }
+    next()
+};
+
 module.exports = {
-    verifyDataCity
+    verifyDataCity,
+    verifyDataItinerary
 }
