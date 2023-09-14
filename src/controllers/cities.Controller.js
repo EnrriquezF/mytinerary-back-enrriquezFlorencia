@@ -29,19 +29,6 @@ const getCities = async (req, res) => {
     }
 }
 
-const getCityByName = async (req, res) => {
-    let {name} = req.query
-    try{
-        let cities = await City.find({name: new RegExp('^' +name, 'i')})
-            
-        res.json(cities)
-    }
-    catch(err) {
-        res.json({message: err.message})
-    }
-     
-}
-
 const addCity = async (req, res) =>{
     try{
         let payload = req.body;
@@ -96,5 +83,4 @@ module.exports = {
     addCity,
     modifyCity,
     deleteCity,
-    getCityByName
 }
