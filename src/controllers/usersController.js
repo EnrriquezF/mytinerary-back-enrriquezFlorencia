@@ -24,18 +24,14 @@ const register = async (req, res) =>{
 
 const login = async (req, res) => {
     try{
+        const { email } = req.body
+        const foundUser = User.findOne({ email: email})
         res.status(200).json({
             message: "Successfully logged in",
-            token: req.token,
-            user: {
-                email: req.user.email,
-                id: req.user.id,
-                name: req.user.name,
-                lastname: req.user.lastName,
-                country: req.user.country
-            }
+            user: foundUser
         })
     } catch(err){
+        console.error('Error during login:', err)
         res.status(400).json({message: err})
     }
 }
