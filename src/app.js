@@ -10,9 +10,7 @@ app.use(express.json())
 app.use(cors())
 app.use(helmet.contentSecurityPolicy({
     directives: {
-      defaultSrc: ["'self'"],
       imgSrc: ["'self'"]
-      // Add other directives as needed
     }
   }));
 
